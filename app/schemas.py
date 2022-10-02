@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 
 class BasePost(BaseModel):
@@ -13,8 +14,12 @@ class CreatePost(BasePost):
 
 
 class Post(BaseModel):
+    id: int
     title: str
     content: str
+    published: bool
+    created_at: datetime
+    owner_id: int
 
     class Config:
         orm_mode = True
