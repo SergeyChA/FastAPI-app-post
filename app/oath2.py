@@ -12,13 +12,13 @@ from . import (
     database,
     models,
 )
-
+from .config import settings
 
 oath2_scheme = OAuth2PasswordBearer(tokenUrl='login')
 
-SECRET_KEY = "fed82a74323a5df2a95820d7eb51499f630a95487fc53907ace70f232a49e601"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 def create_access_token(data: dict()):
     to_encode = data.copy()
