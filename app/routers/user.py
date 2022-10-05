@@ -14,7 +14,6 @@ router = APIRouter(
 )
 
 
-
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOut)
 def create_user(user: schemas.CreateUser, db: Session = Depends(get_db)):
     user.password = utils.hash(user.password)
@@ -33,4 +32,4 @@ def get_user(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with id: {id} was not found")
 
-    return user 
+    return user
