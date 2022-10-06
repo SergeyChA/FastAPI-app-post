@@ -37,7 +37,8 @@ def get_posts(db: Session = Depends(get_db),
                 .filter(models.Post.title.contains(search))
                 .limit(limit)
                 .offset(skip)
-                .all())
+                .all()
+    )
 
     return posts
 
@@ -49,7 +50,8 @@ def get_post(id: int, db: Session = Depends(get_db)):
               .join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True)
               .group_by(models.Post.id)
               .filter(models.Post.id == id)
-              .first())
+              .first()
+    )
 
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -61,8 +63,8 @@ def get_post(id: int, db: Session = Depends(get_db)):
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Post)
 def create_post(post: schemas.CreatePost, 
                 db: Session = Depends(get_db),
-                current_user: models.User = Depends(oath2.get_current_user)):
-    
+                current_user: models.User = Depends(oath2.get_current_user)
+):   
     new_post = models.Post(owner_id=current_user.id, **post.dict())
     db.add(new_post)
     db.commit()
@@ -74,8 +76,8 @@ def create_post(post: schemas.CreatePost,
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, 
                 db: Session = Depends(get_db),
-                current_user: models.User = Depends(oath2.get_current_user)):
-                
+                current_user: models.User = Depends(oath2.get_current_user)
+):          
     post_query = db.query(models.Post).filter(models.Post.id == id)
 
     post = post_query.first()

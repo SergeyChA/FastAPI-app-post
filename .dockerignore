@@ -3,4 +3,4 @@ env/
 .vscode
 .idea
 .env
-.pytest_cache
+.dockerignore
