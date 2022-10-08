@@ -6,14 +6,18 @@ from app.main import app
 from app.config import settings
 from app.oath2 import create_access_token
 from app.database import Base, get_db
-from app import models  
+from app import models
 
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.database_password}@{settings.database_host}:{settings.database_port}/{settings.database_name}_test"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
 
 @pytest.fixture
@@ -46,12 +50,11 @@ def test_user(client):
         "password": "password"
     }
     response = client.post("/users/", json=user_data)
-
     assert response.status_code == 201
-
     new_user = response.json()
     new_user['password'] = user_data['password']
     return new_user
+
 
 @pytest.fixture
 def test_user2(client):
@@ -124,4 +127,3 @@ def test_vote(test_posts, session, test_user):
     new_vote = models.Vote(post_id=test_posts[3].id, user_id=test_user['id'])
     session.add(new_vote)
     session.commit()
-
