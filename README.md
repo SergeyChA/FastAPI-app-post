@@ -9,3 +9,7 @@ Stack:
 - PostgreSQL
 - JWT
 - Docker
+
+<hr>
+
+![ScreenShot](https://github.com/SergeyChA/FastAPI-app-post/blob/master/Screenshot.png)
