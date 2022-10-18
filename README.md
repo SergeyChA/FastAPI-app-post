@@ -9,6 +9,7 @@ Stack:
 - PostgreSQL
 - JWT
 - Docker
+- Pytest
 
 <hr>
 
